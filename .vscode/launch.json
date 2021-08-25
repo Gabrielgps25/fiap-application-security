@@ -7,6 +7,15 @@
         {
             "type": "pwa-node",
             "request": "launch",
+            "name": "Run Lab1",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${workspaceFolder}/lab1-nodejs-sql-injection-vulnerability/app.js"
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
             "name": "Run Lab2",
             "skipFiles": [
                 "<node_internals>/**"
