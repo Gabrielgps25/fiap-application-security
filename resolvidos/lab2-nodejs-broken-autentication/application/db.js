@@ -3,7 +3,7 @@ const { randomUUID } = require('crypto');
 async function connect(){
     if(global.connection && global.connection.state !== 'disconnected')
         return global.connection;
-
+ 
     const mysql = require("mysql2/promise");
     const connection = await mysql.createConnection({
         host: process.env.DB_HOST || 'localhost',
@@ -20,7 +20,7 @@ async function connect(){
 
 async function selectUsers(){
     const conn = await connect();
-
+    
     const query = `SELECT * FROM users LIMIT 1000;`;
     console.log(`Executando query: ${query}`);
 
@@ -29,13 +29,13 @@ async function selectUsers(){
     return rows;
 }
 
-async function selectUserByLogin(user, password){
+async function selectUserByLogin(user){
     const conn = await connect();
-
-    const query = "SELECT * FROM `users` WHERE `user` = ? AND `password` = ?";
+    
+    const query = "SELECT * FROM `users` WHERE `user` = ?;";
     console.log(`Executando query: ${query}`);
-
-    const [rows, fields] = await connection.execute(query, [user, password]);
+    
+    const [rows, fields] = await connection.execute(query, [user]);
 
     return rows;
 }
@@ -58,4 +58,4 @@ async function insertUser(user, password){
     }
 }
 
-module.exports = {selectUserByLogin,selectUsers, insertUser}
+module.exports = {selectUserByLogin, selectUsers, insertUser}
