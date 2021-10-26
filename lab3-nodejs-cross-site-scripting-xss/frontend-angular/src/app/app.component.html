@@ -1,0 +1,23 @@
+
+<h1>Cross Site Scrpting XSS</h1>
+
+<h3>Lista de Produtos</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Valor</th>
+        <th>Descrição</th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of products">
+          <td>{{p.name}}</td>
+          <td>{{p.value | currency}}</td>
+          <td>{{p.description }}</td>
+        </tr>
+      </tbody>
+</table>
+
+<router-outlet></router-outlet>

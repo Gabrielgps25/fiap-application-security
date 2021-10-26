@@ -28,6 +28,18 @@
         {
             "type": "pwa-node",
             "request": "launch",
+            "name": "Run Lab3",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "nodemon",
+            "program": "app.js",
+            "restart": true,
+            "cwd": "${workspaceFolder}/lab3-nodejs-cross-site-scripting-xss/backend"
+        },
+        {
+            "type": "pwa-node",
+            "request": "launch",
             "name": "Run Lab2 resolvido",
             "skipFiles": [
                 "<node_internals>/**"
