@@ -10,9 +10,9 @@ async function connect(){
         port: 3306,
         user: 'test',
         password: 'test',
-        database: 'lab3',
+        database: 'lab1',
         multipleStatements: true
-      } );
+      });
     console.log("Conectou no MySQL!");
     global.connection = connection;
     return connection;
@@ -58,4 +58,4 @@ async function insertProduct(product){
     }
 }
 
-module.exports = {getProducts,getProductById,insertProduct}
+module.exports = {getProducts, getProductById, insertProduct}
