@@ -24,7 +24,7 @@
 
 ## Assinatura Digital
 
-1. Na pasta `assinaturaDigital`, gere um par de chaves RSA conforme passo a passo acima.
+1. Na pasta `assinaturaDigital`, gere um arquivo contendo dados e um par de chaves RSA conforme passo a passo acima.
 2. Gere um checksum baseado no hash do conteúdo com o comando: `sha256sum text.txt | openssl rsautl -inkey private.pem -sign > text.checksum`;
 3. Valide a assinatura via chave pública com o comando: `openssl rsautl -inkey public.pem -pubin -in text.checksum`.
 
