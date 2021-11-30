@@ -23,9 +23,12 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/user",
+							"raw": "127.0.0.1:3000/user",
 							"host": [
-								"localhost"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"port": "3000",
 							"path": [
@@ -41,9 +44,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/users",
+							"raw": "127.0.0.1:3000/users",
 							"host": [
-								"localhost"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
 							"port": "3000",
 							"path": [
@@ -56,7 +62,7 @@
 			]
 		},
 		{
-			"name": "lab1 - sql injection",
+			"name": "lab3 - sql injection",
 			"item": [
 				{
 					"name": "SQL Injection",
@@ -85,11 +91,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "ReDoS",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user\": \"^(a+)+$\",\n    \"password\": \"aaaaaaaaaaaaaaaaaaaa!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
 		{
-			"name": "lab2 - broken authentication",
+			"name": "lab5 - broken authentication",
 			"item": [
 				{
 					"name": "POST register",
@@ -112,7 +145,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"flaviaaaa\",\n    \"password\": \"11\"\n}",
+							"raw": "{\n    \"username\": \"gabriel\",\n    \"password\": \"teste123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -120,7 +153,8 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/register",
+							"raw": "https://localhost:3000/register",
+							"protocol": "https",
 							"host": [
 								"localhost"
 							],
@@ -153,7 +187,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"gabrielPereira\",\n    \"password\": \"1!@aAasdfzar\"\n}",
+							"raw": "{\n    \"username\": \"gabriell\",\n    \"password\": \"teste123\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,7 +257,7 @@
 			]
 		},
 		{
-			"name": "lab3 xss",
+			"name": "lab6 xss",
 			"item": [
 				{
 					"name": "Products",
@@ -284,33 +318,6 @@
 							"port": "3000",
 							"path": [
 								"products"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "User",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"user\": \"^(([a-z])+.)+[A-Z]([a-z])+$\",\n    \"password\": \"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa!\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/user",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"user"
 							]
 						}
 					},
