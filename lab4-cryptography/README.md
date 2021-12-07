@@ -1,4 +1,4 @@
-# Lab 4 Parte 1 - Criptografia, Hash Functions, Assinatura Digital e Certificado Digital
+# Lab 4 - Criptografia, Hash Functions, Assinatura Digital e Certificado Digital
 
 
 ## Criptografia Simétrica (AES 256)

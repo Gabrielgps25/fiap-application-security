@@ -1,4 +1,4 @@
-# Lab2 Broken Authentication
+# Lab 5 - Broken Authentication
 
 ## Ambiente
 
@@ -10,8 +10,9 @@
 * sqlectron;
 * Docker (opcional).
 * MySQL (necessário somente se não possuir Docker);
-* Wireshark (necessário somente se desejar explorar vulnerabilidades attravés de Man In The Middle).
-
+* Wireshark (necessário somente se desejar explorar vulnerabilidades através de Sniffing).
+* Burp Suite (necessário somente se desejar explorar vulnerabilidades através de Man In The Middle).
+  
 ## Como executar a Aplicação
 
 ### Manualmente
@@ -19,7 +20,7 @@
 #### Banco de Dados
 
 1. Executar serviço MySQL;
-2. Criar um banco de dados chamado `lab2`;
+2. Criar um banco de dados chamado `lab5`;
 3. Criar um usuário chamado `test` e senha `test`;
 4. Execute o script `init.sql` para criar a estrutura básica.
 
@@ -49,8 +50,8 @@ Através do Docker, é possível executar a aplicação e o Banco de Dados em co
 1. Execute a aplicação e o banco de dados conforme instruções acima;
 2. No Wireshark, inicie o tracing da interface de rede em utilização;
 3. Efetue uma chamada de Login a Aplicação simulando um usuário real fazendo login;
-4. No Wireshark, inspecione as comunicações HTTP e obtenha o token gerado;
-5. Com o token gerado, consuma o endpoint protegido simulando um atacante.
+4. No Wireshark, inspecione as comunicações HTTP e obtenha o cookie gerado;
+5. Com o cookie gerado, consuma o endpoint protegido simulando um atacante.
 
 ### Dictionary Attack
 
@@ -83,21 +84,6 @@ Através do Docker, é possível executar a aplicação e o Banco de Dados em co
    ```
 3. Implemente logs de segurança em casos de tentativas de login mal sucedidas.
 
-### Obtenção de Credenciais e Session Hijacking - Sniff / Man in the middle
-
-1. Altere a implementação do server para utilizar https, para isso, no `app.js`, inclua:
-   ```javascript
-    var https = require('https');
-    var privateKey  = fs.readFileSync('./sslcert/selfsigned.key', 'utf8');
-    var certificate = fs.readFileSync('./sslcert/selfsigned.crt', 'utf8');
-
-    var credentials = {key: privateKey, cert: certificate};
-
-    var httpsServer = https.createServer(credentials, app);
-
-    httpsServer.listen(3000);
-   ```
-   **Observação**: Os certificados auto assinados devem ser gerados conforme ultimo laboratório.
 
 ### Quebra de senhas (criptografia fraca)
 
@@ -172,3 +158,69 @@ Para mitigar essa vulnerabilidade, utilizar a técnica de armazanamento de senha
       return rows;
    }
    ```
+
+### Obtenção de Credenciais e Session Hijacking - Sniff / Man in the middle (AULA 6)
+
+1. Altere a implementação do server para utilizar https, para isso, no `app.js`, inclua:
+   ```javascript
+    var https = require('https');
+    var privateKey  = fs.readFileSync('./sslcert/selfsigned.key', 'utf8');
+    var certificate = fs.readFileSync('./sslcert/selfsigned.crt', 'utf8');
+
+    var credentials = {key: privateKey, cert: certificate};
+
+    var httpsServer = https.createServer(credentials, app);
+
+    httpsServer.listen(3000);
+   ```
+   **Observação**: Os certificados auto assinados devem ser gerados conforme ultimo laboratório.
+
+### Aula 7 - Autenticação e Autorização
+
+Para
+
+```javascript
+app.post('/login', async (req, res, next) => {
+
+    const users = await db.selectUserByLogin(req.body.username, req.body.password);
+    if(users.length){
+        const user = users[0].id;
+        const sub = randomUUID();
+        var privateKey  = fs.readFileSync('./private.key', 'utf8');
+        var token = jwt.sign({ user,sub }, privateKey, {
+            expiresIn: 300,
+            algorithm:  "RS256"
+        });
+        console.log("Fez login e gerou token!");
+        res.cookie("auth", "true");
+        return res.status(200).send({ token: token });
+    }
+
+    return res.status(401).send('Login inválido!');
+});
+
+app.post('/logout', function(req, res) {
+    console.log("Fez logout e cancelou o token!");
+    res.cookie("auth", "false").status(200).send('done');
+});
+
+function verifyJWT(req, res, next){
+    var token = req.headers['authorization'];
+    if (!token)
+        return res.cookie("auth", "false")
+                .status(401)
+                .send('Não Autorizado.');
+
+    var publicKey  = fs.readFileSync('./public.key', 'utf8');
+    jwt.verify(token.replace("Bearer ", ''), publicKey, {algorithm: ["RS256"]}, function(err, decoded) {
+        if (err)
+            return res.cookie("auth", "false")
+                    .status(401)
+                    .send('Token inválido ou expirado.');
+
+        req.userId = decoded.id;
+        next();
+    });
+}
+
+```

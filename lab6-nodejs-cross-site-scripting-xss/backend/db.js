@@ -10,7 +10,7 @@ async function connect(){
         port: 3306,
         user: 'test',
         password: 'test',
-        database: 'lab6',
+        database: 'lab7',
         multipleStatements: true
       });
     console.log("Conectou no MySQL!");

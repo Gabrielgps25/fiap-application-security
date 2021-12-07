@@ -1,4 +1,4 @@
-USE lab6;
+USE lab7;
 
 CREATE TABLE products(
     id VARCHAR(355) PRIMARY KEY, 

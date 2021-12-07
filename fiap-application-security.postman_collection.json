@@ -99,7 +99,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"user\": \"^(a+)+$\",\n    \"password\": \"aaaaaaaaaaaaaaaaaaaa!\"\n}",
+							"raw": "{\n    \"user\": \"gabriel\",\n    \"password\": \"password\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -125,6 +125,34 @@
 			"name": "lab5 - broken authentication",
 			"item": [
 				{
+					"name": "GET users",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/users",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "POST register",
 					"event": [
 						{
@@ -145,7 +173,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"gabriel\",\n    \"password\": \"teste123\"\n}",
+							"raw": "{\n    \"username\": \"gabriell\",\n    \"password\": \"\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -153,8 +181,8 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:3000/register",
-							"protocol": "https",
+							"raw": "http://localhost:3000/register",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
@@ -187,7 +215,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"username\": \"gabriell\",\n    \"password\": \"teste123\"\n}",
+							"raw": "{\n    \"username\": \"admin\",\n    \"password\": \"admin\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -195,42 +223,14 @@
 							}
 						},
 						"url": {
-							"raw": "https://localhost:3000/login",
-							"protocol": "https",
+							"raw": "http://localhost:3000/login",
+							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
 								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GET users",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{token}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/users",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"users"
 							]
 						}
 					},

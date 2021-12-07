@@ -15,7 +15,7 @@ services:
       MYSQL_ROOT_PASSWORD: P4SSW0rD
       MYSQL_USER: test
       MYSQL_PASSWORD: test
-      MYSQL_DATABASE: lab6
+      MYSQL_DATABASE: lab7
     ports:
       - "3306:3306"
     volumes:

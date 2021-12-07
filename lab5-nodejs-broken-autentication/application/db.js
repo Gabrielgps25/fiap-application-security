@@ -24,7 +24,7 @@ async function selectUsers(){
     const query = `SELECT * FROM users LIMIT 1000;`;
     console.log(`Executando query: ${query}`);
 
-    const [rows, fields] = await connection.execute(query);
+    const [rows, fields] = await conn.execute(query);
     console.log(`Rows: ${JSON.stringify(rows)}`);
     return rows;
 }
@@ -35,7 +35,7 @@ async function selectUserByLogin(user, password){
     const query = "SELECT * FROM `users` WHERE `user` = ? AND `password` = ?";
     console.log(`Executando query: ${query}`);
 
-    const [rows, fields] = await connection.execute(query, [user, password]);
+    const [rows, fields] = await conn.execute(query, [user, password]);
 
     return rows;
 }
@@ -47,7 +47,7 @@ async function insertUser(user, password){
     console.log(`Executando query: ${query}`);
 
     try{
-        const [rows, fields] = await connection.execute(query, [randomUUID(), user, password]);
+        const [rows, fields] = await conn.execute(query, [randomUUID(), user, password]);
         return rows;
     }catch(err){
         if(err.errno === 1062){
