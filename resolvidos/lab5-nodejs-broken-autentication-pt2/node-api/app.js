@@ -7,26 +7,45 @@ const port = 3000
 const db = require("./db");
 const cript = require("./cript");
 
+const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
+
+
+const checkJwt = auth({
+    audience: 'http://localhost:4200',
+    issuerBaseURL: `https://dev-aivd9uma.us.auth0.com`,
+});
+
+app.use(function(req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
 var cookieParser = require('cookie-parser'); 
 const bodyParser = require('body-parser');
-var jwt = require('jsonwebtoken');
-const fs   = require('fs');
-const { randomUUID } = require('crypto');
+
+app.use(bodyParser.urlencoded({ extended: true })); 
+app.use(bodyParser.json());
+app.use(cookieParser()); 
+
+const fs = require('fs');
 
 var RateLimit = require('express-rate-limit');
 
 var limiter = new RateLimit({
-    windowMs: 15*60*1000, // 15 minutes 
-    max: 50, // limit each IP to 100 requests per windowMs 
-    delayMs: 0, // disable delaying - full speed until the max limit is reached 
+    windowMs: 15*60*1000,
+    max: 50,
+    delayMs: 0,
     message: "Too many accounts created from this IP, please try again after an hour"
-  });
+});
 
 app.use(limiter);
 
 var https = require('https');
-var privateKey  = fs.readFileSync('./sslcert/selfsigned.key', 'utf8');
-var certificate = fs.readFileSync('./sslcert/selfsigned.crt', 'utf8');
+var privateKey  = fs.readFileSync('/home/gabriel/projects/aulas/fiap-application-security/resolvidos/lab5-nodejs-broken-autentication-pt2/node-api/sslcert/selfsigned.key', 'utf8');
+var certificate = fs.readFileSync('/home/gabriel/projects/aulas/fiap-application-security/resolvidos/lab5-nodejs-broken-autentication-pt2/node-api/sslcert/selfsigned.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 
@@ -34,11 +53,9 @@ var httpsServer = https.createServer(credentials, app);
 
 httpsServer.listen(port);
 
-app.use(bodyParser.urlencoded({ extended: true })); 
-app.use(bodyParser.json());
-app.use(cookieParser()); 
+const checkScopes = requiredScopes('openid');
 
-app.get('/users', async (req, res, next) => { 
+app.get('/users', checkJwt, checkScopes, async (req, res, next) => {
     console.log("Retornou todos usuarios!");
     var resp = await db.selectUsers()
     res.status(200).json(resp);
@@ -65,26 +82,3 @@ app.post('/register', async (req, res, next) => {
     }
 });
 
-app.post('/login', async (req, res, next) => { 
-
-    const users = await db.selectUserByLogin(req.body.username);
-
-    if(users.length && cript.validate(users[0].password, req.body.password)){ 
-        const user = users[0].id;
-        const sub = randomUUID();
-        var privateKey  = fs.readFileSync('./private.key', 'utf8');
-        var token = jwt.sign({ user,sub }, privateKey, {
-            expiresIn: 300,
-            algorithm:  "RS256"
-        });
-        console.log("Fez login e gerou token!");
-        return res.status(200).send({ auth: true, token: token });
-    }
-    console.log("Erro 401 - Unautorized!");
-    return res.status(401).send('Login inválido!'); 
-})    
-
-app.post('/logout', function(req, res) { 
-    console.log("Fez logout e cancelou o token!");
-    res.status(200).send({ auth: false, token: null }); 
-});

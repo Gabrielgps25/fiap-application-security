@@ -1,14 +1,5 @@
 version: "3"
 services:
-  app:
-    build: .
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-    environment:
-      DB_HOST: db
-
   db:
     image: mysql
     environment:
@@ -20,3 +11,12 @@ services:
       - "3306:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  app:
+    build: .
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db

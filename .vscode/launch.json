@@ -1,6 +1,7 @@
 {
     "version": "0.2.0",
     "configurations": [
+
         {
             "type": "pwa-node",
             "request": "launch",
@@ -48,6 +49,19 @@
             "program": "app.js",
             "restart": true,
             "cwd": "${workspaceFolder}/resolvidos/lab2-nodejs-broken-autentication/application"
+        },
+
+        {
+            "type": "pwa-node",
+            "request": "launch",
+            "name": "Run NodeSPA resolvido",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "ng",
+            "program": "serve",
+            "restart": true,
+            "cwd": "${workspaceFolder}/resolvidos/lab5-nodejs-broken-autentication-pt2/angular-spa"
         }
     ]
 }

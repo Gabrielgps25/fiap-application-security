@@ -177,50 +177,72 @@ Para mitigar essa vulnerabilidade, utilizar a técnica de armazanamento de senha
 
 ### Aula 7 - Autenticação e Autorização
 
-Para
+#### Autenticação
+##### Angular App
 
-```javascript
-app.post('/login', async (req, res, next) => {
+Para implementar Autenticação e Autorização dos usuários, utilizaremos uma solução madura de mercado (auth0), que pode ser acessado em: [https://manage.auth0.com/dashboard](https://manage.auth0.com/dashboard);
 
-    const users = await db.selectUserByLogin(req.body.username, req.body.password);
-    if(users.length){
-        const user = users[0].id;
-        const sub = randomUUID();
-        var privateKey  = fs.readFileSync('./private.key', 'utf8');
-        var token = jwt.sign({ user,sub }, privateKey, {
-            expiresIn: 300,
-            algorithm:  "RS256"
-        });
-        console.log("Fez login e gerou token!");
-        res.cookie("auth", "true");
-        return res.status(200).send({ token: token });
-    }
+1. Faça o login da forma de sua preferência e acesse `Applications`;
+2. Clique em `Create Application` e em seguida defina o nome `AngularApp` e selecione o tipo `Single Page Web Applications`;
+3. Em seguida clique em `Angular`;
+4. Em seguida, abra uma nova aba em `Applications` e abra a `AngularApp` que acabamos de criar;
+5. Selecione o `Client ID` e o `Domain` e cole no arquivo `angular/src/app/auth/auth0-variables.ts`;
+6. Em `Allowed Callback URLs` adicione `http://localhost:4200/callback`;
+7. Mantenha as demais configurações default e clique em `Save Settings`;
+8. Acesse o SPA em `http://localhost:4200` faça a autenticação da sua preferência. 
 
-    return res.status(401).send('Login inválido!');
-});
+Neste ponto, vemos uma autenticação de um usuário via Authorization Code com PKCE;
 
-app.post('/logout', function(req, res) {
-    console.log("Fez logout e cancelou o token!");
-    res.cookie("auth", "false").status(200).send('done');
-});
+9. (OPCIONAL) Efetue logout e tente acessar a rota `http://localhost:4200/users` diretamente, repare que o acesso é bloqueado. 
 
-function verifyJWT(req, res, next){
-    var token = req.headers['authorization'];
-    if (!token)
-        return res.cookie("auth", "false")
-                .status(401)
-                .send('Não Autorizado.');
+##### Node API
 
-    var publicKey  = fs.readFileSync('./public.key', 'utf8');
-    jwt.verify(token.replace("Bearer ", ''), publicKey, {algorithm: ["RS256"]}, function(err, decoded) {
-        if (err)
-            return res.cookie("auth", "false")
-                    .status(401)
-                    .send('Token inválido ou expirado.');
+Agora, na API node que implementamos, incluiremos a validação de tokens, para isso:
 
-        req.userId = decoded.id;
-        next();
-    });
-}
+1. Faça o login da forma de sua preferência e acesse `APIs` em  `Applications`;
+2. Clique em `Create API` e em seguida defina o nome `users` e em identifier adicione `https://localhost:3000/users`;
+3. Clique em `Create`;
+4. Repita os passos 2 e 3 para criar uma API de nome `Angular App` e identifier `http://localhost:4200`;
+5. Em `app.js` altere a implementação para:
+   ```javascript
+      const { auth,} = require('express-oauth2-jwt-bearer');
 
-```
+      const checkJwt = auth({
+         audience: 'seuIdentifier', // Chamadores habilitados
+         issuerBaseURL: `seuIssuerBase`,
+      });
+
+      app.use(function(req, res, next) {
+         res.setHeader('Access-Control-Allow-Origin', '*');
+         res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+         res.setHeader('Access-Control-Allow-Headers', 'Content-Type, authorization');
+         res.setHeader('Access-Control-Allow-Credentials', true);
+         next();
+      });
+
+      ....
+
+      app.get('/users', checkJwt, async (req, res, next) => {
+   ```
+   Obs.: Não se esqueça de executar o `npm install express-oauth2-jwt-bearer`.
+
+6. Acesse o SPA em `http://localhost:4200` faça a autenticação da sua preferência e acesse a rota `Users List`. 
+
+Neste momento, vemos uma autenticação de um usuário via Authorization Code com PKCE e a utilização do Token JWT gerado para consumir a API;
+ 
+#### Autorização
+
+Repare que até então, não validamos nenhuma permissão do usuário específicamente, neste momento, incluiremos uma Autorização (somente usuários autorizados a acessar determinado recurso o poderá fazer).
+
+1. Em app.js, altere a implementação para: 
+   ```javascript
+   const { auth, requiredScopes } = require('express-oauth2-jwt-bearer');
+   const checkScopes = requiredScopes('openid');
+   ...
+   app.get('/users', checkJwt, checkScopes, async (req, res, next) => {
+
+   ``` 
+2. Se necessário, restarte o processo da API;
+3. Teste novamente a validação e altere o requiredScope para qualquer valor (inexistente);
+
+Por boas praticas, para fins de um bom controle de acessos, deveriamos ter uma API BFF (Backend for Frontend que exponha APIs que tenha como objetivo servir o Front end. Este deve possuir uma credencial do tipo client_credentials e este sim sofre validação de scopes para correto controle de acesso a domínios diferentes). 
