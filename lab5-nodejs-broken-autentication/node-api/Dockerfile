@@ -6,6 +6,7 @@ WORKDIR /home/app
 COPY . /home/app
 
 RUN npm i express \ 
-    && npm i mysql2
+    && npm i mysql2 \
+    && npm i express-rate-limit
 
 CMD node app.js

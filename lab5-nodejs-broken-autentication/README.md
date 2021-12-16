@@ -226,7 +226,8 @@ Agora, na API node que implementamos, incluiremos a validação de tokens, para 
    ```
    Obs.: Não se esqueça de executar o `npm install express-oauth2-jwt-bearer`.
 
-6. Acesse o SPA em `http://localhost:4200` faça a autenticação da sua preferência e acesse a rota `Users List`. 
+6. Substitua os valores de `audience` para o endereço do consumidor: `http://localhost:4200` e `issuerBaseURL` para o valor do `Domain` (o mesmo utilizado no arquivo `angular/src/app/auth/auth0-variables.ts` anteriormente), não esqueça de incluir o protocolo `https://`.
+7. Acesse o SPA em `http://localhost:4200` faça a autenticação da sua preferência e acesse a rota `Users List`. 
 
 Neste momento, vemos uma autenticação de um usuário via Authorization Code com PKCE e a utilização do Token JWT gerado para consumir a API;
  
