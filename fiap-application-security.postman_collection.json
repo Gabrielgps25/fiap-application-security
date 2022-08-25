@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2e8fc928-a3ee-4d44-99ca-a0921f60f491",
+		"_postman_id": "b3ddae5c-d5dd-438b-8d18-e4e42a5f8e82",
 		"name": "fiap-application-security",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -9,13 +9,13 @@
 			"name": "lab1 - lgpd logs",
 			"item": [
 				{
-					"name": "User",
+					"name": "clients",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nome\": \"Gabriel Pereira\",\n    \"email\": \"gabrielgps25@test\",\n    \"cpf\": \"234.567.876-98\"\n}",
+							"raw": "{\n    \"nome\": \"Gabriel Pereira Silva\",\n    \"email\": \"gabrielpereira@fiap.com.br\",\n    \"cpf\": \"456.652.789-09\",\n    \"orientacao_sexual\": \"hetero\",\n    \"permite_publicidade\": true\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -23,28 +23,25 @@
 							}
 						},
 						"url": {
-							"raw": "127.0.0.1:3000/user",
+							"raw": "localhost:3000/clients",
 							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
+								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								"user"
+								"clients"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "/users",
+					"name": "clients",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "127.0.0.1:3000/users",
+							"raw": "127.0.0.1:3000/clients/23545643298a",
 							"host": [
 								"127",
 								"0",
@@ -53,7 +50,8 @@
 							],
 							"port": "3000",
 							"path": [
-								"users"
+								"clients",
+								"23545643298a"
 							]
 						}
 					},

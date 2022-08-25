@@ -3,7 +3,7 @@
     "configurations": [
 
         {
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
             "name": "Run Lab1",
             "skipFiles": [
@@ -12,10 +12,22 @@
             "runtimeExecutable": "nodemon",
             "program": "app.js",
             "restart": true,
-            "cwd": "${workspaceFolder}/lab1-nodejs-sql-injection-vulnerability"
+            "cwd": "${workspaceFolder}/lab1-nodejs-lgpd-logs"
         },
         {
-            "type": "pwa-node",
+            "type": "node",
+            "request": "launch",
+            "name": "Run Lab1 Resolvido",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "nodemon",
+            "program": "app.js",
+            "restart": true,
+            "cwd": "${workspaceFolder}/resolvidos/lab1-nodejs-lgpd-logs"
+        },
+        {
+            "type": "node",
             "request": "launch",
             "name": "Run Lab2",
             "skipFiles": [
@@ -27,7 +39,7 @@
             "cwd": "${workspaceFolder}/lab2-nodejs-broken-autentication/application"
         },
         {
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
             "name": "Run Lab3",
             "skipFiles": [
@@ -39,7 +51,7 @@
             "cwd": "${workspaceFolder}/lab3-nodejs-cross-site-scripting-xss/backend"
         },
         {
-            "type": "pwa-node",
+            "type": "node",
             "request": "launch",
             "name": "Run Lab2 resolvido",
             "skipFiles": [

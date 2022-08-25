@@ -1,31 +1,6 @@
 # Lab2 - SonarQube e LGTM
 
-## Ambiente
-
-### Programas Necessários
-
-* Node JS;
-* Docker (opcional).
-* SonarQube Server (necessário somente se não possuir Docker);
-
-## Como executar o Sonar
-
-### Manualmente
-
-#### SonarQube
-
-1. Abra a pasta `bin` do seu SonarQube;
-2. Execute o executável adequado para seu SO, ex.: `sonar.sh`;
-3. Acesse a url padrão `localhost:9000` e efetue login com usuário `admin` e senha `admin`;
-4. Será solicitado que você altere a senha, cadastre uma senha nova;
-5. Vá em `Administration` -> `Configuration`, desmarque a opção `Force user authentication` e clique em `Save`. 
-
-#### Aplicação
-
-1. Rode os testes uniarios da aplicação `npm test`.
-2. Execute o comando `node sonar-project.js`.
-
-### Usando Docker
+Bem vindo ao Lab 2, neste iremos explorar duas ferramentas de avaliação estática de código (SAST) que são o SonarQube e o LGTM. 
 
 #### SonarQaube
 
