@@ -19,10 +19,11 @@ Obs.: Caso você ainda não possua estes programas instalados, vide sessão `Pre
 ## Construído a Aplicação
 
 1. Abra um terminal dentro da pasta `lab1-nodejs-lgpd-logs` e execute o comando `npm init`;
+  * Altere o parâmetro entrypoint para o valor `app.js`;
 2. Altere as informações padrão se desejar e confirme todas as questões, feito isso, será criado o arquivo `package.json` na pasta (aqui você ja possui um projeto NodeJS funcional);
 3. Para criarmos rotas de API, utilizaremos o framework express sobre o NodeJS, para instalar o mesmo, execute o comando: `npm install express --save`;
 4. Abra a pasta atual no VS Code (dica: pode ser utilizado o comando: `code .`);
-5. Crie um arquivo com o nome que você definiu na questão `entry point` (padrão: `index.js`) e inclua o conteúdo:
+5. Crie um arquivo com o nome `app.js` que você definiu na questão `entry point` e inclua o conteúdo:
     ```javascript
 
     const express = require('express');
@@ -49,7 +50,7 @@ Pronto, você criou sua primeira App em NodeJs com Express ! :)
 ---
 **DICA**
 
-Para facilitar o desenvolvimento e teste da aplicação, vamos instalar o `nodemon` que é um utilitário que dispõe o live reload para mudanças efetuadas em código, no terminal execute: `npm i --save-dev nodemon`.
+Para facilitar o desenvolvimento e teste da aplicação, vamos instalar o `nodemon` que é um utilitário que dispõe o live reload para mudanças efetuadas em código, no terminal execute: `npm i -g nodemon` (Caso você esteja usando Linux ou Mac, será necessária elevação de acesso com `sudo`).
 
 Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `node app.js` e não precisa reciclar o processo manualmente a cada alteração =)
 
@@ -57,7 +58,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
 
 1. No arquivo `app.js` crie as rotas de inclusão e consumo (neste momento, ainda sem comunicação real com o Banco de Dados):
     ```javascript
-      
+
       const bodyParser = require('body-parser');
       app.use(bodyParser.json());
 
@@ -89,7 +90,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
         
         });
     ```
-2. Salve o arquivo e o execute com o comando: `nodemon app.js`, se preferir, utilize a configuração de execução do vscode para que possa debugar.
+2. Salve o arquivo e o execute com o comando: `nodemon index.js`, se preferir, utilize a configuração de execução do vscode para que possa debugar.
 3. Teste a aplicação através da Postman Collection disponibilizada na raiz do repo.
 
 ## Criando um Banco de Dados e preparando dados
@@ -99,7 +100,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
     docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=RootPassword -e MYSQL_DATABASE=Backoffice -e MYSQL_USER=MainUser -e MYSQL_PASSWORD=MainPassword docker.io/mysql
     ```
 2. No SQL Client de sua preferência, crie uma nova conexão, configure segundo os parâmetros passados no comando anterior e teste a conexão.
-3. Para criarmos uma estrutura basica de dados, execute os comandos:
+3. Para criarmos uma estrutura básica de dados, execute os comandos:
     ```sql
     USE seuDbMySql;
     CREATE TABLE clients (
@@ -150,7 +151,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
         if(result.length == 0){
           throw {statusCode: 404, message: 'Usuário não encontrado!'};    
         }
-        return result
+        return result[0]
 
     }
 
@@ -177,7 +178,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
 
     module.exports = {selectClientByCpf, insertClient}
     ```
-3. No arquvivo `app.js`, vamos invocar as funções criadas, para isso, altere a implementação para:
+3. No arquivo `app.js`, vamos invocar as funções criadas, para isso, altere a implementação para:
     ```javascript
     const db = require("./db");
     const { randomUUID } = require('crypto');
@@ -231,7 +232,7 @@ Para tornar a nossa aplicação aderente a LGPD, um dos principais cuidados que 
                 obj[key] = obj[key].replace(/\.[0-9]{3}\.[0-9]{3}/, ".***.***");
             }else if(key === "email"){
                 obj[key] = obj[key].replace(/.*@/, "*******@");
-            }else if(key === "orientacao_sexual"){
+            }else if(key === "orientacao_sexual" && obj[key] != null){
                 obj[key] = obj[key].replace(/.*/, "****");
             }
         });
