@@ -5,6 +5,18 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Run Lab5",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "runtimeExecutable": "node",
+            "program": "app.js",
+            "restart": true,
+            "cwd": "${workspaceFolder}/lab5-nodejs-broken-autentication/node-api"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Run Lab1",
             "skipFiles": [
                 "<node_internals>/**"

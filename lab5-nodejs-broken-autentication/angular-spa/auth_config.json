@@ -1,0 +1,8 @@
+{
+  "domain": "seuDomain",
+  "clientId": "seuClientId",
+  "audience": "http://localhost:4200",
+  "apiUri": "https://localhost:3000",
+  "appUri": "http://localhost:4200",
+  "errorPath": "/error"
+}

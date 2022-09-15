@@ -1,0 +1,8 @@
+{
+  "domain": "dev-aivd9uma.us.auth0.com",
+  "clientId": "g9zR5vbYMWGyD3QyrocS4b1xifig46W0",
+  "audience": "http://localhost:4200",
+  "apiUri": "https://localhost:3000",
+  "appUri": "http://localhost:4200",
+  "errorPath": "/error"
+}

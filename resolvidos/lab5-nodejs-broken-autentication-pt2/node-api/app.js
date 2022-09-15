@@ -44,8 +44,8 @@ var limiter = new RateLimit({
 app.use(limiter);
 
 var https = require('https');
-var privateKey  = fs.readFileSync('/home/gabriel/projects/aulas/fiap-application-security/resolvidos/lab5-nodejs-broken-autentication-pt2/node-api/sslcert/selfsigned.key', 'utf8');
-var certificate = fs.readFileSync('/home/gabriel/projects/aulas/fiap-application-security/resolvidos/lab5-nodejs-broken-autentication-pt2/node-api/sslcert/selfsigned.crt', 'utf8');
+var privateKey  = fs.readFileSync('sslcert/selfsigned.key', 'utf8');
+var certificate = fs.readFileSync('sslcert/selfsigned.crt', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 

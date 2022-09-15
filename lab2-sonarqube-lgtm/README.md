@@ -10,7 +10,7 @@ Bem vindo ao Lab 2, neste iremos explorar duas ferramentas de avaliação estát
 4. Vá em `Administration` -> `Configuration`, desmarque a opção `Force user authentication` e clique em `Save`. 
 #### Aplicação
 
-1. Rode os testes uniarios da aplicação `npm test`.
+1. Instale o projeto `npm i` e rode os testes unitários da aplicação `npm test`.
 2. Execute o comando `node sonar-project.js`.
 
 ## LGTM
@@ -29,8 +29,8 @@ Para efetuar a análise no LGTM, siga o passo a passo abaixo:
 
 Para efetuar a análise no Aqua, siga o passo a passo abaixo: 
 
-8. Compile a imagem docker do projeto: `docker build . -t lab1`;
-9. Execute a análise Aqua: `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy lab1`;
+8. Compile a imagem docker do projeto: `docker build . -t lab2`;
+9. Execute a análise Aqua: `docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v $HOME/Library/Caches:/root/.cache/ aquasec/trivy image lab2`;
 
 > Obs: Em ambiente Windows, utilize `-v //var/run/docker.sock:/var/run/docker.sock` para montar o sock docker.
 

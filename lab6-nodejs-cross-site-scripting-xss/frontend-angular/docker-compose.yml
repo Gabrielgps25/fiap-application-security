@@ -1,0 +1,7 @@
+version: "3.2"
+services:
+   angular_app:
+       build: .
+       container_name: angular_app
+       ports:
+         - "4200:4200"

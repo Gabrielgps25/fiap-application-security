@@ -1,63 +1,72 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { HttpModule, Http, RequestOptions } from '@angular/http';
-import { RouterModule } from '@angular/router';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import json from 'highlight.js/lib/languages/json';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-
-import { ROUTES } from './app.routes';
-
-import { AuthService } from './auth/auth.service';
-import { TimesheetsService } from './services/timesheets.service';
-import { UsersService } from './services/user.service';
-import { AuthHttp, AuthConfig } from 'angular2-jwt';
-import { AuthGuardService } from './auth/auth-guard.service';
-import { ScopeGuardService } from './auth/scope-guard.service';
-import { ProfileComponent } from './profile/profile.component';
-import { CallbackComponent } from './callback/callback.component';
-import { TimesheetListComponent } from './timesheet-list/timesheet-list.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { TimesheetAddComponent } from './timesheet-add/timesheet-add.component';
-import { ApprovalComponent } from './approval/approval.component';
-
-export function authHttpServiceFactory(http: Http, options: RequestOptions) {
-  return new AuthHttp(new AuthConfig({
-    tokenGetter: (() => localStorage.getItem('access_token')),
-    globalHeaders: [{'Content-Type': 'application/json'}],
-  }), http, options);
-}
+import { HomeComponent } from './pages/home/home.component';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ErrorComponent } from './pages/error/error.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { HeroComponent } from './components/hero/hero.component';
+import { HomeContentComponent } from './components/home-content/home-content.component';
+import { LoadingComponent } from './components/loading/loading.component';
+import { ExternalApiComponent } from './pages/external-api/external-api.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor, AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from '../environments/environment';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ProfileComponent,
-    CallbackComponent,
-    UserListComponent,
-    TimesheetListComponent,
-    TimesheetAddComponent,
-    ApprovalComponent
+    NavBarComponent,
+    FooterComponent,
+    HeroComponent,
+    HomeContentComponent,
+    LoadingComponent,
+    ExternalApiComponent,
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
-    HttpModule,
-    RouterModule.forRoot(ROUTES)
+    AppRoutingModule,
+    HttpClientModule,
+    NgbModule,
+    HighlightModule,
+    FontAwesomeModule,
+    AuthModule.forRoot({
+      ...env.auth,
+      httpInterceptor: {
+        ...env.httpInterceptor,
+      },
+    }),
   ],
   providers: [
-    AuthService,
-    AuthGuardService,
-    ScopeGuardService,
     {
-      provide: AuthHttp,
-      useFactory: authHttpServiceFactory,
-      deps: [Http, RequestOptions]
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthHttpInterceptor,
+      multi: true,
     },
-    TimesheetsService,
-    UsersService
+    {
+      provide: Window,
+      useValue: window,
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: () => import('highlight.js/lib/core'),
+        languages: {
+          json: () => import('highlight.js/lib/languages/json'),
+        },
+      },
+    },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
