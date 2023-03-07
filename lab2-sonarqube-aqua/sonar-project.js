@@ -3,6 +3,7 @@ sonarqubeScanner(
     {
         serverUrl:  'http://localhost:9000',
         options : {
+            'sonar.projectKey': 'lab2',
             'sonar.sources':  'src',
             'sonar.tests':  'src',
             'sonar.inclusions'  :  '**',
