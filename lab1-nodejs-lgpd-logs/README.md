@@ -87,35 +87,20 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
 
         console.error(`Usuário de CPF: ${req.params['cpf']} não encontrado`)
         return res.status(errResult.status).send(errResult);
-        
         });
     ```
 2. Salve o arquivo e o execute com o comando: `nodemon index.js`, se preferir, utilize a configuração de execução do vscode para que possa debugar.
 3. Teste a aplicação através da Postman Collection disponibilizada na raiz do repo.
 
-## Criando um Banco de Dados e preparando dados
+## Executando e conectando a aplicação a um Banco de Dados real
 
-1. Neste passo, iremos executar uma imagem docker¹ para rodar um serviço de Banco de Dados MySql, para isso, em uma nova janela terminal, execute o comando:
+1. Neste passo, iremos executar uma imagem docker¹ para rodar um serviço de Banco de Dados MySql e inserir dados mínimos nele, para isso, em uma nova janela terminal, execute o comando:
     ```bash
-    docker run -d -p 3306:3306 -e MYSQL_ROOT_PASSWORD=RootPassword -e MYSQL_DATABASE=Backoffice -e MYSQL_USER=MainUser -e MYSQL_PASSWORD=MainPassword docker.io/mysql
+    docker-compose up
     ```
-2. No SQL Client de sua preferência, crie uma nova conexão, configure segundo os parâmetros passados no comando anterior e teste a conexão.
-3. Para criarmos uma estrutura básica de dados, execute os comandos:
-    ```sql
-    USE seuDbMySql;
-    CREATE TABLE clients (
-      id_pessoa VARCHAR(36) UNIQUE NOT NULL,
-      nome VARCHAR(50) NOT NULL,
-      cpf  VARCHAR(14) UNIQUE NOT NULL,
-      email VARCHAR(50) UNIQUE NOT NULL,
-      orientacao_sexual VARCHAR(10),
-      permite_publicidade BOOLEAN NOT NULL
-    );
 
-    INSERT INTO clients (id_pessoa, nome, cpf, email, orientacao_sexual, permite_publicidade) VALUES 
-      ('1fa98604-1185-48b2-bffe-05b848842cda', 'Gabriel Pereira da Silva', '234.452.154-87', 'gabriel@test.com', 'hetero', true),
-      ('2e495651-1d83-a8w1-btfe-07b942802fa3', 'Bart Simpson', '365.476.839-18', 'bart@simpsons.com', null, false);
-    ````
+2. Para nos familiarizarmos com o banco de dados e sua estrutura, avalie os arquivos `docker-compose.yml` e `init.sql`.
+
 
 ¹ Caso não esteja familiarizado com docker, realize a trilha no site oficial:
   * Docker: https://docs.docker.com/build/hellobuild/
@@ -258,94 +243,6 @@ Para tornar a nossa aplicação aderente a LGPD, um dos principais cuidados que 
     utils.logInfo("Novo usuário cadastrado com sucesso", client)
 ```
 
-## Containerizando a aplicação
-
-Visando abstrair a infraestrutura da Aplicação e do banco de dados, vamos gerar uma imagem docker para executar nossa aplicação e através do Docker Compose, orquestrar os containers do Banco de Dados e da aplicação.
-
-1. Crie um arquivo chamado `Dockerfile` contendo o passo a passo para compilação e execução da aplicação:
-```bash
-  FROM node:14.17.4-alpine
-  EXPOSE 3000
-
-  WORKDIR /home/app
-
-  COPY . /home/app
-
-  RUN npm i express \ 
-      && npm i mysql2
-
-  CMD node app.js
-```
-
-2. Para testar, vamos compilar a imagem através do comando: `docker build . -t lab1` e executar a aplicação em um container com `docker run -p3000:3000 -e DB_HOST=172.17.0.1 lab1`;
-
----
-**OBSERVAÇÃO**
-
-Repare que se torna bastante trabalhoso gerenciar os containers manualmente, e considerando que estamos em um cenário pequeno com apenas 2 containers, imagine gerenciarmos manualmente um ambiente com 20 containers, impossível não é?!
-
-Podemos ir além e utilizar um orquestrador de containers, que evita que tenhamos de compilar, iniciar, parar e deletar os containers, ele mesmo gerencia o ambiente para nós. Neste este exemplo utilizaremos o docker compose, porém existem diversos no mercado como o Kubernetes ou o Amazon ECS.
----
-
-3. Crie um arquivo novo chamado `docker-compose.yml` e inclua o conteúdo:
-
-```yaml
-version: "3"
-services:
-  db:
-    image: mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: P4SSW0rD
-      MYSQL_USER: test
-      MYSQL_PASSWORD: test
-      MYSQL_DATABASE: lab1
-    ports:
-      - "3306:3306"
-
-  app:
-    build: .
-    depends_on:
-      - db
-    ports:
-      - "3000:3000"
-    environment:
-      DB_HOST: db
-```
-4. Teste o ambiente executando o comando `docker-compose up`; (garanta que os 2 containers estejam parados para não ocorrer erro de bind de portas), ao consumir a aplicação, você deve receber um erro pois a tabela ainda não existe;
-
-Até aqui, o docker-compose já é o suficiente para subirmos ambos containers, porém, desta forma, o banco de dados está vazio e teríamos de popular ele manualmente, oque não faz muito sentido, portanto, delegaremos a criação da estrutura do banco de dados ao docker-compose também, para isso:
-
-5. Crie um aquivo chamado `init.sql` na raiz do projeto e inclua o conteúdo igual ao que utilizamos na sessão `Criando um Banco de Dados e preparando dados`:  
-```sql
-USE seuSqlDb;
-
-CREATE TABLE clients (
-    id_pessoa VARCHAR(36) UNIQUE NOT NULL,
-    nome VARCHAR(50) NOT NULL,
-    cpf  VARCHAR(14) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    orientacao_sexual VARCHAR(10),
-    permite_publicidade BOOLEAN NOT NULL
-);
-
-INSERT INTO clients (id_pessoa, nome, cpf, email, orientacao_sexual, permite_publicidade) VALUES 
-('1fa98604-1185-48b2-bffe-05b848842cda', 'Gabriel Pereira da Silva', '231.452.545-98', 'gabriel@test.com', 'hetero', true),
-('2e495651-1d83-a8w1-btfe-07b942802fa3', 'Bart Simpson', '365.476.839-18', 'bart@simpsons.com', null, false);
-
-```
-
-6. A imagem docker `mysql` que estamos utilizando, considera e executa os scripts da pasta `docker-entrypoint-initdb.d` do container ao iniciar a primeira execução do banco, portanto, mapearemos o arquivo que criamos dentro do container através de um volume, para isso, inclua no serviço `db` do arquiuvo `docker-compose.yml`:
-
-    volumes:
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-
-7. Vamos deletar os containers criados pela execução anterior do docker-compose para forçar a recriação do banco de dados, para isso, execute os comandos: 
-
-```bash
-docker container prune
-docker volume prune
-```
-
-8. Execute o ambiente novamente com `docker-compose up` e teste a aplicação. 
+8. Execute a aplicação e realize alguns testes. 
 
 Parabéns, você concluiu o primeiro lab :) 

@@ -13,18 +13,6 @@ Bem vindo ao Lab 2, neste iremos explorar duas ferramentas de avaliação estát
 1. Instale o projeto `npm i` e rode os testes unitários da aplicação `npm test`.
 2. Execute o comando `node sonar-project.js`.
 
-## LGTM
-
-Para efetuar a análise no LGTM, siga o passo a passo abaixo: 
-
-1. Crie um repositório público no GitHub;
-2. Efetue commit e push deste  código no repo criado;
-3. No LGTM, faça login com sua autenticação de preferência;
-4. Vá em `Project lists`;
-5. No input `Follow a project from a repository host` copie e cole o endereço do seu repositório e clique em `Follow`;
-6. Neste momento, o LGTM tenta iniciar a compilação e análise do projeto;
-7. Analise o relatório obtido;
-
 ## Aqua Trivy
 
 Para efetuar a análise no Aqua, siga o passo a passo abaixo: 
