@@ -7,7 +7,7 @@ Bem vindo ao Lab 2, neste iremos explorar duas ferramentas de avaliação estát
 1. Execute o comando: `docker-compose up sonar`;
 2. Acesse a url padrão `localhost:9000` e efetue login com usuário `admin` e senha `admin`;
 3. Será solicitado que você altere a senha, cadastre uma senha nova.
-4. Vá em `Administration` -> `Configuration`, desmarque a opção `Force user authentication` e clique em `Save`. 
+4. Vá em `Administration` -> `Configuration` -> `Security`, desmarque a opção `Force user authentication` e clique em `Save`. 
 #### Aplicação
 
 1. Instale o projeto `npm i` e rode os testes unitários da aplicação `npm test`.
