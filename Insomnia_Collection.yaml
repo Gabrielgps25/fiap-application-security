@@ -1,0 +1,382 @@
+_type: export
+__export_format: 4
+__export_date: 2023-03-09T19:30:56.907Z
+__export_source: insomnia.desktop.app:v2022.7.3
+resources:
+  - _id: req_5f7ccb908f554e3a9e5db03bd9d8fbe1
+    parentId: fld_28eaecceadfa4e5eb192c9d990fc5848
+    modified: 1678386673262
+    created: 1678386673262
+    url: localhost:3000/clients
+    name: clients
+    description: ""
+    method: POST
+    body:
+      mimeType: ""
+      text: |-
+        {
+            "nome": "Gabriel Pereira Silva",
+            "email": "gabrielpereira@fiap.com.br",
+            "cpf": "456.652.789-09",
+            "orientacao_sexual": "hetero",
+            "permite_publicidade": true
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678386673262
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_28eaecceadfa4e5eb192c9d990fc5848
+    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
+    modified: 1678386673263
+    created: 1678386673263
+    name: lab1 - lgpd logs
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678386673263
+    _type: request_group
+  - _id: fld_e30ca0e27269477e8f9e1170d893d1b7
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1678386673267
+    created: 1678386673267
+    name: fiap-application-security
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678386673267
+    _type: request_group
+  - _id: wrk_a1a1a7251389454caf675bf45b852cd5
+    parentId: null
+    modified: 1678386673269
+    created: 1678386611174
+    name: New Document
+    description: ""
+    scope: design
+    _type: workspace
+  - _id: req_17309f2871e34abdaac12e4629865e03
+    parentId: fld_28eaecceadfa4e5eb192c9d990fc5848
+    modified: 1678386673260
+    created: 1678386673260
+    url: 127.0.0.1:3000/clients/23545643298a
+    name: clients
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678386673260
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_461bdfe345704312a3ea69b2dab8c3e5
+    parentId: fld_62d2278a997a4e518a9f792b50fc0d9b
+    modified: 1678388185253
+    created: 1678386673258
+    url: localhost:3000/auth
+    name: SQL Injection
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - name: user
+        value: admin
+        disabled: false
+        id: pair_59bb888e8ace42faaaa2cfb4896d1e15
+      - name: password
+        value: "AHAwdeferg' OR 1=1 -- "
+        disabled: false
+        id: pair_49f03e1fb18c47aaa35226c69d9dbae1
+    headers: []
+    authentication: {}
+    metaSortKey: -1678386673258
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_62d2278a997a4e518a9f792b50fc0d9b
+    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
+    modified: 1678386673259
+    created: 1678386673259
+    name: lab3 - sql injection
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678386673259
+    _type: request_group
+  - _id: req_e2d8a190fc744da8aa387262f400cf31
+    parentId: fld_62d2278a997a4e518a9f792b50fc0d9b
+    modified: 1678388351208
+    created: 1678386673256
+    url: localhost:3000/user
+    name: ReDoS
+    description: ""
+    method: POST
+    body:
+      mimeType: ""
+      text: |-
+        {
+            "user": "^(a+)+$",
+            "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaa!"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678386673256
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5d961cc159ff46d4bbf558699e71ec12
+    parentId: fld_a1866f0236f64154a9b6f822d5ad81b5
+    modified: 1678386673253
+    created: 1678386673253
+    url: localhost:3000/users
+    name: GET users
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication:
+      type: bearer
+      disabled: false
+      token: "{{token}}"
+      prefix: ""
+    metaSortKey: -1678386673253
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a1866f0236f64154a9b6f822d5ad81b5
+    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
+    modified: 1678386673255
+    created: 1678386673255
+    name: lab5 - broken authentication
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678386673255
+    _type: request_group
+  - _id: req_c7be9381664945e79ea2ef7cb74fe376
+    parentId: fld_a1866f0236f64154a9b6f822d5ad81b5
+    modified: 1678386673251
+    created: 1678386673251
+    url: http://localhost:3000/register
+    name: POST register
+    description: ""
+    method: POST
+    body:
+      mimeType: ""
+      text: |-
+        {
+            "username": "gabriell",
+            "password": ""
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678386673251
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9dac73034e8f481ea3767dbfdc792620
+    parentId: fld_a1866f0236f64154a9b6f822d5ad81b5
+    modified: 1678386673249
+    created: 1678386673249
+    url: http://localhost:3000/login
+    name: POST login
+    description: ""
+    method: POST
+    body:
+      mimeType: ""
+      text: |-
+        {
+            "username": "admin",
+            "password": "admin"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678386673249
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_aa715262f4764bcdae2fea316d2e1ff0
+    parentId: fld_a1866f0236f64154a9b6f822d5ad81b5
+    modified: 1678386673247
+    created: 1678386673247
+    url: localhost:3000/logout
+    name: POST logout
+    description: ""
+    method: POST
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678386673247
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6d94cf3930984dfda247127077e12777
+    parentId: fld_c79f141ad7a2428c868da93338ed7704
+    modified: 1678386673244
+    created: 1678386673244
+    url: localhost:3000/products
+    name: Products
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678386673244
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_c79f141ad7a2428c868da93338ed7704
+    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
+    modified: 1678386673245
+    created: 1678386673245
+    name: lab6 xss
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1678386673246
+    _type: request_group
+  - _id: req_dbd06b7972c7425fa4d371b3b90544ef
+    parentId: fld_c79f141ad7a2428c868da93338ed7704
+    modified: 1678386673242
+    created: 1678386673242
+    url: localhost:3000/products/1
+    name: Product By ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers: []
+    authentication: {}
+    metaSortKey: -1678386673242
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_008ceab0383a4002baef9ec4d01b7c9b
+    parentId: fld_c79f141ad7a2428c868da93338ed7704
+    modified: 1678386673240
+    created: 1678386673240
+    url: localhost:3000/products
+    name: Product
+    description: ""
+    method: POST
+    body:
+      mimeType: ""
+      text: >-
+        {
+            "name": "xss12",
+            "value": 0,
+            "description": "%3Cscript%3Ealert(%5C%22woooow2%5C%22)%3B%3C%2Fscript%3E"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+    authentication: {}
+    metaSortKey: -1678386673240
+    isPrivate: false
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_c0b5bfaaccd0ee446f846c91f1688c362332ca9b
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1678386611177
+    created: 1678386611177
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1678386611177
+    _type: environment
+  - _id: jar_c0b5bfaaccd0ee446f846c91f1688c362332ca9b
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1678386611179
+    created: 1678386611179
+    name: Default Jar
+    cookies: []
+    _type: cookie_jar
+  - _id: spc_8650c40616c54122bbf5b70e8391d570
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1678386611174
+    created: 1678386611174
+    fileName: New Document
+    contents: ""
+    contentType: yaml
+    _type: api_spec
+  - _id: uts_5b5383ed5e204e6b9d61dfafca7175e6
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1678386611182
+    created: 1678386611182
+    name: Example Test Suite
+    _type: unit_test_suite
