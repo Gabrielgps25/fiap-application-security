@@ -89,7 +89,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
         return res.status(errResult.status).send(errResult);
         });
     ```
-2. Salve o arquivo e o execute com o comando: `nodemon index.js`, se preferir, utilize a configuração de execução do vscode para que possa debugar.
+2. Salve o arquivo e o execute com o comando: `nodemon app.js`, se preferir, utilize a configuração de execução do vscode para que possa debugar.
 3. Teste a aplicação através da Postman Collection disponibilizada na raiz do repo.
 
 ## Executando e conectando a aplicação a um Banco de Dados real
@@ -120,7 +120,7 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
           host: process.env.DB_HOST || 'localhost',
           user: 'MainUser',
           password: 'MainPassword',
-          database: 'Backoffice',
+          database: 'lab1',
           multipleStatements: true
       });
       global.connection = connection;
