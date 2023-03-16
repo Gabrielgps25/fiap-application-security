@@ -14,19 +14,6 @@
   
 ## Como executar a Aplicação
 
-### Manualmente
-
-#### Banco de Dados
-
-1. Executar serviço MySQL;
-2. Criar um banco de dados chamado `lab5`;
-3. Criar um usuário chamado `test` e senha `test`;
-4. Execute o script `init.sql` para criar a estrutura básica.
-
-#### Aplicação
-
-1. Execute o comando `npm install`;
-2. Execute o comando `node app.js`.
 
 ### Usando Docker
 
@@ -42,12 +29,26 @@ Através do Docker, é possível executar a aplicação e o Banco de Dados em co
 #### Somente Aplicação
 1. Executar o comando `docker-compose up app`.
 
+### Manualmente
+
+#### Banco de Dados
+
+1. Executar serviço MySQL;
+2. Criar um banco de dados chamado `lab5`;
+3. Criar um usuário chamado `test` e senha `test`;
+4. Execute o script `init.sql` para criar a estrutura básica.
+
+#### Aplicação
+
+1. Execute o comando `npm install`;
+2. Execute o comando `node app.js`.
+
 ## Explorando as vulnerabilidades
 
 ### Session Hijacking
 
 1. Execute a aplicação e o banco de dados conforme instruções acima;
-2. No Burp Suite, inicie o tracing da interface de rede em utilização;
+2. No Burp Suite, ative o proxy e configure o Insomnia para utiliza-lo como proxy;
 3. Efetue uma chamada de Login a Aplicação simulando um usuário real fazendo login;
 4. No Burp Suite, inspecione as comunicações HTTP e obtenha o cookie gerado;
 5. Com o cookie gerado, consuma o endpoint protegido simulando um atacante.
@@ -55,7 +56,7 @@ Através do Docker, é possível executar a aplicação e o Banco de Dados em co
 ### Dictionary Attack
 
 1. Execute a aplicação e o banco de dados conforme instruções acima;
-2. No bash de comando, execute o script `brute.sh` presente em `black-hat-env/brutal-force` passando os arquivos `username-list.txt` e `password-list.txt` como parâmetros, exemplo: `./brute.sh username-list.txt password-list.txt`;
+2. No bash de comando, execute o script `dictionary.sh` presente em `black-hat-env/dictionary-attack` passando os arquivos `username-list.txt` e `password-list.txt` como parâmetros, exemplo: `./dictionary.sh username-list.txt password-list.txt`;
 3. Obtenha as credenciais expostas simulando um atacante.
 
 ## Mitigando as vulnerabilidades

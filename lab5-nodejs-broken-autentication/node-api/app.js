@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 
 app.get('/users', async (req, res, next) => {
     if(req.cookies["auth"] !== "true"){
-        return res.status(401).send();  
+        return res.status(401).send();
     }
     console.log("Retornou todos usuarios!");
     var resp = await db.selectUsers()

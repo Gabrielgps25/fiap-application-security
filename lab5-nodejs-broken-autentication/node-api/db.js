@@ -24,9 +24,14 @@ async function selectUsers(){
     const query = `SELECT * FROM users LIMIT 1000;`;
     console.log(`Executando query: ${query}`);
 
-    const [rows, fields] = await conn.execute(query);
-    console.log(`Rows: ${JSON.stringify(rows)}`);
-    return rows;
+    try{
+        const [rows, fields] = await conn.execute(query);
+        console.log(`Rows: ${JSON.stringify(rows)}`);
+        return rows;
+    }catch(err){
+        console.err(err);
+        throw {code: 500, message: 'Erro inesperado ao tentar buscar usuário'};
+    }
 }
 
 async function selectUserByLogin(user, password){
@@ -35,9 +40,13 @@ async function selectUserByLogin(user, password){
     const query = "SELECT * FROM `users` WHERE `user` = ? AND `password` = ?";
     console.log(`Executando query: ${query}`);
 
-    const [rows, fields] = await conn.execute(query, [user, password]);
-
-    return rows;
+    try{
+        const [rows, fields] = await conn.execute(query, [user, password]);
+        return rows;
+    }catch(err){
+        console.err(err);
+        throw {code: 500, message: 'Erro inesperado ao tentar logar usuário'};
+    }
 }
 
 async function insertUser(user, password){
@@ -53,9 +62,10 @@ async function insertUser(user, password){
         if(err.errno === 1062){
             throw {code: 500, message: 'Erro ao cadastrar usuário: Usuário já existe'};
         }else{
+            console.err(err);
             throw {code: 500, message: 'Erro inesperado ao tentar cadastrar usuário'};
         }
     }
 }
 
-module.exports = {selectUserByLogin,selectUsers, insertUser}
+module.exports = {selectUserByLogin, selectUsers, insertUser}

@@ -17,7 +17,7 @@
 
 ## Hash Functions
 
-1. No bash execute `echo -n SeuNome | md5dsum`;
+1. No bash execute `echo -n SeuNome | md5sum`;
 2. Busque o hash gerado no site: `https://www.md5online.org/md5-decrypt.html`;
 3. Execute o mesmo comando usando os algoritmos `sha256sum` e `sha512sum`;
 4. Quais diferenças encontramos ?
