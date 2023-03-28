@@ -186,7 +186,7 @@ Para implementar Autenticação e Autorização dos usuários, utilizaremos uma 
 2. Clique em `Create Application` e em seguida defina o nome `AngularApp` e selecione o tipo `Single Page Web Applications`;
 3. Em seguida clique em `Settings`;
 4. Copie os valores de `Client ID` e `Domain` e cole no arquivo `auth_config.json` nos campos correspondentes;
-5. Em `Allowed Callback URLs`, `Allowed Logout URLs` e `Allowed Callback URLs` adicione `http://localhost:4200`;
+5. Em `Allowed Callback URLs`, `Allowed Logout URLs` e `Allowed Web Origins` adicione `http://localhost:4200`;
 6. Mantenha as demais configurações default e clique em `Save Settings`;
 7. De volta ao projeto, instale o angular cli através do comando: `npm install -g @angular/cli` e execute a aplicação com: `ng serve`; 
 8. Efetue o login e acesse a aba `Profile`; 
