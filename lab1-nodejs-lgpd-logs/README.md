@@ -101,6 +101,13 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
 
 2. Para nos familiarizarmos com o banco de dados e sua estrutura, avalie os arquivos `docker-compose.yml` e `init.sql`.
 
+Obs: Caso ocorra o erro abaixo, no terminal, com a pasta do laboratório aberta, execute: `chmod -R 777 .` e tente novamente. 
+```
+[db]    | 2023-04-03 23:18:36+00:00 [Note] [Entrypoint]: /usr/local/bin/docker-entrypoint.sh: running /docker-entrypoint-initdb.d/init.sql
+/usr/local/bin/docker-entrypoint.sh: line 75: /docker-entrypoint-initdb.d/init.sql: Permission denied
+exit code: 1
+```
+
 
 ¹ Caso não esteja familiarizado com docker, realize a trilha no site oficial:
   * Docker: https://docs.docker.com/build/hellobuild/
@@ -137,7 +144,6 @@ Agora, você pode executar sua aplicação com `nodemon app.js` ao invés de `no
           throw {statusCode: 404, message: 'Usuário não encontrado!'};    
         }
         return result[0]
-
     }
 
     async function insertClient(client){
