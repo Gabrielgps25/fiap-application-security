@@ -4,16 +4,16 @@
 ## Criptografia Simétrica (AES 256)
 1. Na pasta `aes`, crie um arquivo contendo um texto curto, para isso, na bash execute o comando: `echo "Segurança em Aplicações - MBA Mobile Development" >> text.txt`
 2. Criptografe o arquivo usando: `openssl enc -aes-256-cbc -in text.txt -out text.txt.enc -k mySecretPassword`;
-3. Desriptografe o arquivo usando: `openssl enc -d -aes-256-cbc -in text.txt.enc -out text.txt.dec -k mySecretPassword`;
+3. Descriptografe o arquivo usando: `openssl enc -d -aes-256-cbc -in text.txt.enc -out text.txt.dec -k mySecretPassword`;
 4. Para validar a integridade do arquivo, compare as diferenças com: `diff text.txt text.txt.dec`, o output deve ser nulo;
 
 ## Criptografia Assimétrica (RSA com AES 128)
 
 1. Na pasta `rsa`, crie um arquivo contendo um texto curto, para isso, na bash execute o comando: `echo "Segurança em Aplicações - MBA Mobile Development" >> text.txt`;
 2. Crie uma chave privada rsa usando o comando: `openssl genrsa -aes128 -out private.pem 1024`;
-3. Apartir da chave privada, extraia a chave pública, usando: `openssl rsa -in private.pem -outform PEM -pubout -out public.pem`;
-4. Criptografe o arquivo apartir da chave pública com o comando: `openssl rsautl -encrypt -inkey public.pem -pubin -in text.txt -out text.enc`;
-5. Descriptografe o arquivo apartir da chave privada com o comando: `openssl rsautl -decrypt -inkey private.pem -in text.enc`.
+3. A partir da chave privada, extraia a chave pública, usando: `openssl rsa -in private.pem -outform PEM -pubout -out public.pem`;
+4. Criptografe o arquivo a partir da chave pública com o comando: `openssl rsautl -encrypt -inkey public.pem -pubin -in text.txt -out text.enc`;
+5. Descriptografe o arquivo a partir da chave privada com o comando: `openssl rsautl -decrypt -inkey private.pem -in text.enc`.
 
 ## Hash Functions
 
