@@ -13,7 +13,7 @@
     <tbody>
 
         <?php
-            $response = file_get_contents('http://172.17.0.1:3000/products');
+            $response = file_get_contents('http://backend:3000/products');
             $response = json_decode($response, TRUE );
 
             foreach ($response as $product){

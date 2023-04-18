@@ -1,17 +1,40 @@
 version: "3.2"
 services:
-   nginx:
-       container_name: nginx
-       image: nginx:1.17.8
-       ports:
-           - 80:80
-       volumes:
-           - ./config/nginx/site.conf:/etc/nginx/conf.d/site.conf
-           - ./php_app:/php_app
-       links:
-           - php_app
-   php_app:
-       build: php_app
-       container_name: php_app
-       volumes:
-           - ./php_app:/php_app
+
+  nginx:
+      container_name: nginx
+      image: nginx:1.17.8
+      ports:
+          - 80:80
+      volumes:
+          - ./config/nginx/site.conf:/etc/nginx/conf.d/site.conf
+          - ./php_app:/php_app
+      links:
+          - php_app
+
+  php_app:
+      build: php_app
+      container_name: php_app
+      volumes:
+          - ./php_app:/php_app
+
+  backend:
+    build: ../backend
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P4SSW0rD
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: lab7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../init.sql:/docker-entrypoint-initdb.d/init.sql

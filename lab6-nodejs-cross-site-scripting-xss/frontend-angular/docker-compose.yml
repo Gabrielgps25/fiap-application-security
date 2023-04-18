@@ -1,7 +1,27 @@
 version: "3.2"
 services:
-   angular_app:
-       build: .
-       container_name: angular_app
-       ports:
-         - "4200:4200"
+  angular_app:
+      build: .
+      container_name: angular_app
+      ports:
+        - "4200:4200"
+  backend:
+    build: ../backend
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db
+
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P4SSW0rD
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_DATABASE: lab7
+    ports:
+      - "3306:3306"
+    volumes:
+      - ../init.sql:/docker-entrypoint-initdb.d/init.sql
