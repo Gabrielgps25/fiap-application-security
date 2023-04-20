@@ -1,8 +1,11 @@
 {
-  "domain": "seuDomain",
-  "clientId": "seuClientId",
-  "audience": "http://localhost:4200",
-  "apiUri": "https://localhost:3000",
+  "domain": "seuDomainSemHttps",
+  "clientId": "seuClientID",
+  "authorizationParams": {
+    "audience": "http://localhost:4200"
+
+  },
+  "apiUri": "http://localhost:3000",
   "appUri": "http://localhost:4200",
   "errorPath": "/error"
 }

@@ -3,3 +3,4 @@ coverage/
 .scannerwork/
 
 .db.js.swp
+.angular/

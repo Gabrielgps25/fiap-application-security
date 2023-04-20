@@ -3,10 +3,12 @@
 // The list of file replacements can be found in `angular.json`.
 import config from '../../auth_config.json';
 
-const { domain, clientId, audience, apiUri, errorPath } = config as {
+const { domain, clientId, authorizationParams: { audience }, apiUri, errorPath } = config as {
   domain: string;
   clientId: string;
-  audience?: string;
+  authorizationParams: {
+    audience?: string;
+  },
   apiUri: string;
   errorPath: string;
 };
@@ -16,8 +18,10 @@ export const environment = {
   auth: {
     domain,
     clientId,
-    ...(audience && audience !== 'YOUR_API_IDENTIFIER' ? { audience } : null),
-    redirectUri: window.location.origin,
+    authorizationParams: {
+      ...(audience && audience !== 'YOUR_API_IDENTIFIER' ? { audience } : null),
+      redirect_uri: window.location.origin,
+    },
     errorPath,
   },
   httpInterceptor: {
@@ -32,4 +36,4 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

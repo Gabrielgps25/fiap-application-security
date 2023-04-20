@@ -2,16 +2,15 @@ const express = require('express');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
-const jwt = require('express-jwt');
-const jwksRsa = require('jwks-rsa');
+const { auth } = require('express-oauth2-jwt-bearer');
 const authConfig = require('./auth_config.json');
 
 const app = express();
 
 if (
   !authConfig.domain ||
-  !authConfig.audience ||
-  authConfig.audience === "YOUR_API_IDENTIFIER"
+  !authConfig.authorizationParams.audience ||
+  authConfig.authorizationParams.audience === "YOUR_API_IDENTIFIER"
 ) {
   console.log(
     "Exiting: Please make sure that auth_config.json is in place and populated with valid domain and audience values"
@@ -28,17 +27,9 @@ app.use(
   })
 );
 
-const checkJwt = jwt({
-  secret: jwksRsa.expressJwtSecret({
-    cache: true,
-    rateLimit: true,
-    jwksRequestsPerMinute: 5,
-    jwksUri: `https://${authConfig.domain}/.well-known/jwks.json`,
-  }),
-
-  audience: authConfig.audience,
-  issuer: `https://${authConfig.domain}/`,
-  algorithms: ['RS256'],
+const checkJwt = auth({
+  audience: authConfig.authorizationParams.audience,
+  issuerBaseURL: `https://${authConfig.domain}`,
 });
 
 app.get('/api/external', checkJwt, (req, res) => {

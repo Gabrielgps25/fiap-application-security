@@ -185,27 +185,23 @@ Para implementar Autenticação e Autorização dos usuários, utilizaremos uma 
 1. Faça o login no Dashboard do Auth0 da forma de sua preferência e acesse `Applications`;
 2. Clique em `Create Application` e em seguida defina o nome `AngularApp` e selecione o tipo `Single Page Web Applications`;
 3. Em seguida clique em `Settings`;
-4. Copie os valores de `Client ID` e `Domain` e cole no arquivo `auth_config.json` nos campos correspondentes;
+4. Copie os valores de `Client ID` e `Domain` e guarde estes, utilizaremos mais a frente;
 5. Em `Allowed Callback URLs`, `Allowed Logout URLs` e `Allowed Web Origins` adicione `http://localhost:4200`;
 6. Mantenha as demais configurações default e clique em `Save Settings`;
-7. De volta ao projeto, instale o angular cli através do comando: `npm install -g @angular/cli` e execute a aplicação com: `ng serve`; 
-8. Efetue o login e acesse a aba `Profile`; 
-9. Efetue logout e tente acessar a rota `http://localhost:4200/profile` diretamente, repare que o acesso é bloqueado e você será redirecionado para o login. 
 
 ##### Node API
 
 Agora, na API node que implementamos, incluiremos a validação de tokens, para isso:
 
 1. De volta ao Dashboard do Auth0, acesse `APIs` em  `Applications`;
-2. Clique em `Create API` e em seguida defina o nome `users` e em identifier adicione `https://localhost:3000/users`;
+2. Clique em `Create API` e em seguida defina o nome `users` e em identifier adicione `http://localhost:4200`;
 3. Clique em `Create`;
-4. Repita os passos 2 e 3 para criar uma API de nome `Angular App` e identifier `http://localhost:4200`;
 5. Em `app.js` altere a implementação para:
    ```javascript
-      const { auth,} = require('express-oauth2-jwt-bearer');
+      const { auth } = require('express-oauth2-jwt-bearer');
 
       const checkJwt = auth({
-         audience: 'seuIdentifier', // Chamadores habilitados
+         audience: 'http://localhost:4200', // Chamadores habilitados
          issuerBaseURL: `seuIssuerBase`,
       });
 
@@ -223,11 +219,21 @@ Agora, na API node que implementamos, incluiremos a validação de tokens, para 
    ```
    Obs.: Não se esqueça de executar o `npm install express-oauth2-jwt-bearer`.
 
-6. Substitua os valores de `audience` para o endereço do consumidor: `http://localhost:4200` e `issuerBaseURL` para o valor do `Domain` (o mesmo utilizado no arquivo `auth_config.json` anteriormente), não esqueça de incluir o protocolo `https://`.
-7. Acesse o SPA em `http://localhost:4200` faça a autenticação da sua preferência e acesse a aba `External API`.
-8. Teste a integração clicando em `Ping API`.
 
-* Lembre-se que nosso certificado é Auto Assinado, portanto, caso ocorra erro no passo 8, inspecione a aba Network do Google Chrome DevTools (pode ser aberta pressionando `F12`), caso o erro seja referente a Autoridade de Certificado Inválida ou semelhante, acesse o endpoint `https://localhost:3000/users` e clique em `Avançado` e `Ir para localhost`.  
+##### Angular SPA
+
+1. Instale o angular cli através do comando: `npm install -g @angular/cli` e execute a aplicação com: `ng serve`;
+2. Acesse a aplicação no Navegador pela URL: `http://localhost:4200`;
+3. Efetue o login e acesse a aba `Profile`;
+4. Efetue logout e tente acessar a rota `http://localhost:4200/profile` diretamente, repare que o acesso é bloqueado e você será redirecionado para o login;
+5. Agora no arquivo `auth_config.json`:
+  a. Substitua os valores de `Client ID` e `Domain`  pelos valores que você armazenou anteriormente;
+  b. Substitua o valor de `audience` para o endereço do consumidor (esta propria aplicação): `http://localhost:4200`;
+  c. Substitua o valores d `issuerBaseURL` para o valor do `Domain` (não esqueça de incluir o protocolo `https://`).
+6. De volta a aplicação, faça a autenticação da sua preferência e acesse a aba `External API`.
+7. Teste a integração clicando em `Ping API`.
+
+* Lembre-se que nosso certificado é Auto Assinado, portanto, caso ocorra erro no passo anterior, inspecione a aba Network do Google Chrome DevTools (pode ser aberta pressionando `F12`), caso o erro seja referente a Autoridade de Certificado Inválida ou semelhante, acesse o endpoint `https://localhost:3000/users` e clique em `Avançado` e `Ir para localhost`.  
 
 Neste momento, vemos uma autenticação de um usuário via Authorization Code com PKCE e a utilização do Token JWT gerado pelo SPA para consumir a API;
  
