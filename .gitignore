@@ -4,3 +4,4 @@ coverage/
 
 .db.js.swp
 .angular/
+dist/

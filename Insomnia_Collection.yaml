@@ -1,7 +1,7 @@
 _type: export
 __export_format: 4
-__export_date: 2023-03-09T19:30:56.907Z
-__export_source: insomnia.desktop.app:v2022.7.3
+__export_date: 2023-04-21T01:15:30.878Z
+__export_source: insomnia.desktop.app:v2023.1.0
 resources:
   - _id: req_5f7ccb908f554e3a9e5db03bd9d8fbe1
     parentId: fld_28eaecceadfa4e5eb192c9d990fc5848
@@ -36,24 +36,14 @@ resources:
     settingFollowRedirects: global
     _type: request
   - _id: fld_28eaecceadfa4e5eb192c9d990fc5848
-    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
-    modified: 1678386673263
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1682039659603
     created: 1678386673263
     name: lab1 - lgpd logs
     description: ""
     environment: {}
     environmentPropertyOrder: null
-    metaSortKey: -1678386673263
-    _type: request_group
-  - _id: fld_e30ca0e27269477e8f9e1170d893d1b7
-    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
-    modified: 1678386673267
-    created: 1678386673267
-    name: fiap-application-security
-    description: ""
-    environment: {}
-    environmentPropertyOrder: null
-    metaSortKey: -1678386673267
+    metaSortKey: -1678386673217
     _type: request_group
   - _id: wrk_a1a1a7251389454caf675bf45b852cd5
     parentId: null
@@ -114,14 +104,14 @@ resources:
     settingFollowRedirects: global
     _type: request
   - _id: fld_62d2278a997a4e518a9f792b50fc0d9b
-    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
-    modified: 1678386673259
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1682039667396
     created: 1678386673259
     name: lab3 - sql injection
     description: ""
     environment: {}
     environmentPropertyOrder: null
-    metaSortKey: -1678386673259
+    metaSortKey: -1678386673167
     _type: request_group
   - _id: req_e2d8a190fc744da8aa387262f400cf31
     parentId: fld_62d2278a997a4e518a9f792b50fc0d9b
@@ -178,14 +168,14 @@ resources:
     settingFollowRedirects: global
     _type: request
   - _id: fld_a1866f0236f64154a9b6f822d5ad81b5
-    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
-    modified: 1678386673255
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1682039668708
     created: 1678386673255
     name: lab5 - broken authentication
     description: ""
     environment: {}
     environmentPropertyOrder: null
-    metaSortKey: -1678386673255
+    metaSortKey: -1678386673117
     _type: request_group
   - _id: req_c7be9381664945e79ea2ef7cb74fe376
     parentId: fld_a1866f0236f64154a9b6f822d5ad81b5
@@ -288,20 +278,20 @@ resources:
     settingFollowRedirects: global
     _type: request
   - _id: fld_c79f141ad7a2428c868da93338ed7704
-    parentId: fld_e30ca0e27269477e8f9e1170d893d1b7
-    modified: 1678386673245
+    parentId: wrk_a1a1a7251389454caf675bf45b852cd5
+    modified: 1682039670250
     created: 1678386673245
     name: lab6 xss
     description: ""
     environment: {}
     environmentPropertyOrder: null
-    metaSortKey: -1678386673246
+    metaSortKey: -1678386673067
     _type: request_group
   - _id: req_dbd06b7972c7425fa4d371b3b90544ef
     parentId: fld_c79f141ad7a2428c868da93338ed7704
-    modified: 1678386673242
+    modified: 1682039642345
     created: 1678386673242
-    url: localhost:3000/products/1
+    url: localhost:3000/products/1cf641f0-19a1-4699-94f6-5cc45c061ca8
     name: Product By ID
     description: ""
     method: GET
@@ -368,9 +358,9 @@ resources:
     _type: cookie_jar
   - _id: spc_8650c40616c54122bbf5b70e8391d570
     parentId: wrk_a1a1a7251389454caf675bf45b852cd5
-    modified: 1678386611174
+    modified: 1682039701171
     created: 1678386611174
-    fileName: New Document
+    fileName: fiap-application-security
     contents: ""
     contentType: yaml
     _type: api_spec

@@ -12,28 +12,19 @@
 * MySQL (necessário somente se não possuir Docker);
 * Nginx (necessário somente se não possuir Docker);
 
-## Como executar a Aplicação
-
-### Usando Docker
-
-Através do Docker, é possível executar as aplicações, o banco de dados e o Nginx em containers, com abstração de instalação de ambiente, preparação de banco de dados e configurações de proxy reverso.
-
-#### Backend + Banco de dados
-
-1. Execute o comando `docker-compose up` na pasta `backend`.
+## Executando a Aplicação
 
 #### Parte 1 -> Frontend PHP + Nginx
 
-1. Execute o comando `docker-compose up` na pasta `frontend-php`.
+1. Na pasta `frontend-php`, execute a aplicação com o comando `docker-compose up`.
 
 #### Parte 2 -> Frontend Angular
 
-1. Execute o comando `docker-compose up` na pasta `frontend-angular`.
-
+1. Na pasta `frontend-angular`, execute a aplicação com o comando `docker-compose up`.
 
 ## Explorando Vulnerabilidades
 
-Explore as vulnerabilidades em ambos frontends e tome nota das diferenças encontradas
+Explore as vulnerabilidades em ambos frontends e tome nota das diferenças encontradas.
 
 ### Reflected
 
